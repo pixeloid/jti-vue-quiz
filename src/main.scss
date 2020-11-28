@@ -73,10 +73,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 14px;
     width: $space * 15;
     height: $space9;
-    background: url(~@/assets/svg/diamond-bg.svg);
+    background: url(/assets/svg/diamond-bg.svg);
     background-size: cover;
     font-size: $medium;
   }
@@ -158,17 +157,23 @@ h1.quiz-heading {
       box-shadow: 0 $size $space 0 rgba(0, 66, 131, .14);
       margin-bottom: $size;
       background-color: $white;
+      cursor: pointer;
     
       &:hover {
         //background-color: AliceBlue;
-        background-color: PaleTurquoise;
+        background-color: lighten($primaryBlue, 10%);
+        color: whitesmoke;
       }
       &.correct {
-        background-color: Aquamarine;
+        background-color: darkgreen;
+        border-color: darkgreen;
+        color: whitesmoke;
       }
       &.wrong {
         //background-color: LightPink;
-        background-color: MistyRose;
+        border-color: darkred;
+        background-color: darkred;
+        color: antiquewhite;
       }
     }
   }

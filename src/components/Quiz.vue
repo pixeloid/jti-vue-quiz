@@ -6,7 +6,7 @@
         <h2>A játék indítása</h2>
       </div>
       <div class="brand">
-        <img src=~@/assets/images/jti-logo.png alt="">
+        <img src=../assets/images/jti-logo.png alt="">
       </div>
     </header>
 
@@ -73,14 +73,12 @@
 <script>
 import { store, mutations, actions } from "../store";
 import { version as appVersion } from "../../package.json";
-import Picture from "./Picture";
 
 const welcomeImg =
   "https://media0.giphy.com/media/Bh3YfliwBZNwk/giphy.gif?cid=3640f6095c852266776c6f746fb2fc67";
 
 export default {
   name: "Quiz",
-  components: { Picture },
   props: {
     url: {
       required: true,
@@ -111,7 +109,7 @@ export default {
     correctAnswers() {
       let count = 0;
       this.questions.forEach((q, i) => {
-        if (q.correct == this.answers[i]) count++;
+        if (q.correct === this.answers[i]) count++;
       });
       return count;
     },
