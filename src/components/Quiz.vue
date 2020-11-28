@@ -9,6 +9,9 @@
         <img src=../assets/images/jti-logo.png alt="">
       </div>
     </header>
+    <div class="quiz-anim">
+      <lottie :options="defaultOptions" :height="400" :width="400" v-on:animCreated="handleAnimation"/>
+    </div>
 
     <transition name="fade" mode="out-in" v-if="!loading">
       <div :key="currentQuestion" class="quiz-section">
@@ -73,12 +76,17 @@
 <script>
 import { store, mutations, actions } from "../store";
 import { version as appVersion } from "../../package.json";
+import Lottie from './lottie.vue';
+import * as animationData from '../assets/lottie/sample.json';
 
 const welcomeImg =
   "https://media0.giphy.com/media/Bh3YfliwBZNwk/giphy.gif?cid=3640f6095c852266776c6f746fb2fc67";
 
 export default {
   name: "Quiz",
+  components: {
+    'lottie': Lottie
+  },
   props: {
     url: {
       required: true,
@@ -89,6 +97,7 @@ export default {
     return {
       loading: true,
       usersAnswer: null,
+      defaultOptions: {animationData: animationData.default},
       moviesTitles: [
         "Harry Potter and the Prisoner of Azkaban",
         "Harry Potter and the Goblet of Fire",
@@ -152,6 +161,20 @@ export default {
     async fetchData() {
       await actions.fetchData(this.url);
     },
+    handleAnimation: function (anim) {
+      this.anim = anim;
+    },
+    play: function () {
+      this.anim.play();
+    },
+    stop: function () {
+      this.anim.stop();
+    },
+
+    pause: function () {
+      this.anim.pause();
+    },
+
     async init() {
       await this.fetchData();
       if (
@@ -181,7 +204,7 @@ export default {
     },
     initQuizStage(currentQuestion) {
       mutations.setStage("quiz");
-      mutations.setTitle("Which movie is this?");
+      mutations.setTitle("Ez a kérdés?");
       mutations.setAnswers(
         localStorage.answers ? localStorage.answers.split(",") : []
       );
@@ -221,6 +244,7 @@ export default {
       const img = this.questions[i - 1].img;
       mutations.setImg(img);
       mutations.setCurrentQuestion(i);
+      this.anim.playSegments([i*10, i*20], true );
     }
   },
   watch: {
