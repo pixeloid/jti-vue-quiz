@@ -135,7 +135,7 @@ h1.quiz-heading {
   width: 60%;
   text-transform: uppercase;
   text-decoration: none;
-  box-shadow: 0 $size $space 0 rgba(0, 66, 131, .2);
+  box-shadow: 0 $size $space 0 rgba(0, 66, 131, .14);
 }
 
 .quiz-game {
@@ -155,18 +155,20 @@ h1.quiz-heading {
       text-align: center;
       width: 80%;
       text-decoration: none;
-      box-shadow: 0 $size $space 0 rgba(0, 66, 131, .2);
+      box-shadow: 0 $size $space 0 rgba(0, 66, 131, .14);
       margin-bottom: $size;
       background-color: $white;
     
       &:hover {
-        background-color: lightblue;
+        //background-color: AliceBlue;
+        background-color: PaleTurquoise;
       }
       &.correct {
-        color: turquoise;
+        background-color: Aquamarine;
       }
       &.wrong {
-        color: red
+        //background-color: LightPink;
+        background-color: MistyRose;
       }
     }
   }
