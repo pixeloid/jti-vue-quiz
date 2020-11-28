@@ -1,0 +1,28 @@
+@font-face {
+    font-family: 'Winston';
+    src: url(~@/assets/fonts/Winston-Bold.woff2) format('woff2'),
+        url(~@/assets/fonts/Winston-Bold.woff) format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: 'Winston';
+    src: url(~@/assets/fonts/Winston-Medium.woff2) format('woff2'),
+        url(~@/assets/fonts/Winston-Medium.woff) format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: 'Winston';
+    src: url(~@/assets/fonts/Winston-Thin.woff2) format('woff2'),
+        url(~@/assets/fonts/Winston-Thin.woff) format('woff');
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+  }
+  
+  

@@ -1,5 +1,38 @@
-@import url("https://fonts.googleapis.com/css?family=Merriweather:400,700");
+@import "/src/styles/fonts.scss";
 @import url("https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css");
+
+//
+//sizes
+//
+$space: 8px;
+$space2: $space*2;
+$space3: $space*3;
+$space4: $space*4;
+$space5: $space*5;
+$space6: $space*6;
+$space7: $space*7;
+$space8: $space*8;
+$space9: $space*9;
+$space10: $space*10;
+$size: $space2;
+$small: $size;
+$medium: $size + $space;
+$large: $size * 2;
+//
+
+//
+//colors
+//
+$white: #fff;
+$blue: #004283;
+//
+
+//
+//token names
+//
+$primaryBlue: $blue;
+//
+//
 
 * {
   box-sizing: border-box;
@@ -11,213 +44,152 @@ html {
 
 body {
   height: 100%;
-  background: #020815;
-  color: #eee;
+  background: $white;
+  color: $blue;
+  padding: 0 $space7;
 }
 
 .app {
   min-height: 100%;
-  padding: 95px 15px 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: "Merriweather", Helvetica, Arial, sans-serif;
+  font-family: "Winston", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  text-align: left;
 }
+
 .app-header {
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
-  height: 95px;
-  padding: 15px;
+  padding: 0;
+  font-size: 1em;
   display: flex;
   justify-content: space-between;
-  font-size: 11px;
-}
-.app-header a {
-  color: #eee;
-  text-decoration: none;
-  border-bottom: 1px solid rgba(238, 238, 238, 0.5);
-}
-.app-heading {
-  position: absolute;
-  top: 50px;
-  left: 50%;
-  margin: 0;
-  padding-left: 20px;
-  font-size: 14px;
-  line-height: 15px;
-  transform: translateX(-50%);
-  cursor: default;
-  user-select: none;
-}
-@media (min-width: 600px) {
-  .app-header {
-    height: 90px;
-    padding: 30px 15px;
-    align-items: center;
+  align-items: center;
+
+  .counter-container {
+    display: flex;
   }
-  .app-heading {
-    top: 30px;
-  }
-}
-.app-heading-icon {
-  position: absolute;
-  top: 1px;
-  left: -5px;
-  fill: #eee;
-  width: 26px;
-  height: 26px;
-}
-.app-heading span {
-  display: block;
-}
-.app-header-text {
-  opacity: 0.5;
-}
-
-
-.quiz {
-  position: relative;
-  width: 100%;
-  max-width: 500px;
-}
-
-.quiz-counter {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  text-shadow: 1px 1px 2px #020815;
-  font-size: 14px;
-}
-@media (min-width: 600px) {
+  
   .quiz-counter {
-    font-size: 16px;
-  }
-}
-
-.quiz-img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.quiz-heading {
-  margin: 20px 0;
-  font-size: 20px;
-  line-height: 1.2;
-}
-@media (min-width: 600px) {
-  .quiz-heading {
-    margin: -40px 0 30px;
-    font-size: 30px;
-    text-shadow: 1px 1px 2px #020815;
-  }
-}
-
-.quiz-result {
-  margin: 20px 0;
-  font-size: 12px;
-  line-height: 1.4;
-}
-@media (min-width: 600px) {
-  .quiz-result {
-    margin: 20px 0 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-size: 14px;
+    width: $space * 15;
+    height: $space9;
+    background: url(~@/assets/svg/diamond-bg.svg);
+    background-size: cover;
+    font-size: $medium;
   }
+
+  h2 {
+    text-transform: uppercase;
+    font-size: $medium;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 $size;
+  }
+
+  .brand {
+    display: flex;
+    justify-content: right;
+    img {
+      height: $space * 15;
+    }
+  }
+}
+
+h1.quiz-heading {
+  font-size: 4em;
+}
+
+.quiz-section {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  position: absolute;
+  height: 100%;
+  top: 0;
+  left: 56px;
+  right: 56px;
+
+  .quiz-content {
+    display: flex;
+    width: 50%;
+  }
+
+  .quiz-home {
+    padding: 0 8em;
+  }
+
 }
 
 .quiz-button {
-  display: inline-block;
-  padding: 10px 30px;
-  border: 1px solid rgba(238, 238, 238, 0.3);
-  color: #eee;
+  display: block;
+  border: 2px solid $primaryBlue;
+  color: $primaryBlue;
+  font-size: $large;
+  padding: $space + 4;
+  text-align: center;
+  width: 60%;
+  text-transform: uppercase;
   text-decoration: none;
-  transition: border-color 0.5s;
+  box-shadow: 0 $size $space 0 rgba(0, 66, 131, .2);
 }
-.quiz-button:hover {
-  border-color: #eee;
+
+.quiz-game {
+  width: 100%;
+  h1.quiz-heading {
+    font-size: $large + $space;
+  }
+  .quiz-questions {
+    padding: 0;
+
+    .quiz-question-button {
+      display: block;
+      border: 2px solid $primaryBlue;
+      color: $primaryBlue;
+      font-size: $medium;
+      padding: $space;
+      text-align: center;
+      width: 80%;
+      text-decoration: none;
+      box-shadow: 0 $size $space 0 rgba(0, 66, 131, .2);
+      margin-bottom: $size;
+      background-color: $white;
+    
+      &:hover {
+        background-color: lightblue;
+      }
+      &.correct {
+        color: turquoise;
+      }
+      &.wrong {
+        color: red
+      }
+    }
+  }
 }
 
 .quiz-questions {
-  max-width: 400px;
-  padding: 0;
-  margin: 0 auto;
-  list-style: none;
-}
-.quiz-question {
-  margin-top: 10px;
-}
-.quiz-question-button {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid rgba(238, 238, 238, 0.3);
-  border-radius: 0;
-  background: transparent;
-  color: #eee;
-  font-size: 11px;
-  cursor: pointer;
-  transition: border-color 0.5s, background 0.5s;
-  outline: none;
-}
-
-.quiz-question-button.correct {
-  border-color: #5ba55b;
-  background: #5ba55b;
-}
-.quiz-question-button.wrong {
-  border-color: #cc5454;
-  background: #cc5454;
-}
-@media (min-width: 600px) {
-  .quiz-question-button {
-    font-size: 14px;
-  }
-}
-@media (hover: hover) {
-  .quiz-question-button:hover,
-  .quiz-question-button:focus {
-    border-color: #eee;
+  .quiz-question {
+    list-style-type: none;
   }
 }
 
-/* Loader */
-.loader {
-  height: 32px;
-  width: 32px;
-}
-.loader span {
-  display: block;
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  margin: auto;
-  height: 32px;
-  width: 32px;
-}
-.loader span::before,
-.loader span::after {
-  content: "";
-  display: block;
+.footer {
   position: absolute;
-  top: 0;
-  left: 0;
   bottom: 0;
-  right: 0;
-  margin: auto;
-  height: 32px;
-  width: 32px;
-  border: 2px solid #fff;
-  border-radius: 50%;
-  opacity: 0;
-  animation: loader-1 1.5s cubic-bezier(0.075, 0.82, 0.165, 1) infinite;
+  width: 100%;
+  left: 0;
+  text-align: center;
+  padding: 0 0 $space5 0;
+  font-weight: 300;
+  font-size: $medium;
 }
+
+
 @keyframes loader-1 {
   0% {
     transform: translate3d(0, 0, 0) scale(0);

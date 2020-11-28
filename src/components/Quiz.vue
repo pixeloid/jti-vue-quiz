@@ -1,41 +1,71 @@
 <template>
   <section class="quiz">
-    <transition name="fade" mode="out-in" v-if="!loading">
-      <div :key="currentQuestion">
-        <div class="quiz-counter" v-if="stage === 'quiz'">{{currentQuestion}} / {{questions.length}}</div>
-        <Picture class="quiz-img" :url="img"/>
-        <h1 class="quiz-heading" v-html="title"></h1>
-        <a
-          href="#start-quiz"
-          class="quiz-button"
-          @click.prevent="initQuizStage"
-          v-if="stage === 'welcome'"
-        >Start Quiz</a>
-        <p class="quiz-result" v-if="stage === 'results'" v-html="resultsInfo.text"></p>
-        <a
-          href="#restart-quiz"
-          class="quiz-button"
-          @click.prevent="initWelcomeStage"
-          v-if="stage === 'results'"
-        >Try again</a>
+    <header class="app-header">
+      <div class="counter-container">
+         <div class="quiz-counter" v-if="stage === 'quiz'">{{currentQuestion}} / {{questions.length}}</div>
+        <h2>A játék indítása</h2>
+      </div>
+      <div class="brand">
+        <img src=~@/assets/images/jti-logo.png alt="">
+      </div>
+    </header>
 
-        <ul class="quiz-questions" v-if="stage === 'quiz'">
-          <li
-            class="quiz-question"
-            v-for="(answer, i) in questions[currentQuestion-1].answers"
-            :key="i"
-          >
-            <button
-              class="quiz-question-button"
-              :class="{'correct': usersAnswer === answer && answer === questions[currentQuestion-1].correct , 'wrong': usersAnswer === answer && usersAnswer !== questions[currentQuestion-1].correct}"
-              @click="handleAnswer(answer)"
-            >{{moviesTitles[answer-1]}}</button>
-          </li>
-        </ul>
+    <transition name="fade" mode="out-in" v-if="!loading">
+      <div :key="currentQuestion" class="quiz-section">
+
+        <div v-if="stage === 'welcome'" class="quiz-home">
+          <h1 class="quiz-heading" v-html="title"></h1>
+          <a
+            href="#start-quiz"
+            class="quiz-button"
+            @click.prevent="initQuizStage"
+            v-if="stage === 'welcome'"
+          >Indítás</a>
+        </div>
+
+        <div v-if="stage === 'results'">
+          <div class="quiz-home">
+            <!--
+            <Picture class="quiz-img" :url="img"/>
+            -->
+            <h1 class="quiz-heading" v-html="resultsInfo.text"></h1>
+            <p class="quiz-result" v-if="stage === 'results'" v-html="title"></p>
+            <a
+              href="#restart-quiz"
+              class="quiz-button"
+              @click.prevent="initWelcomeStage"
+            >Újra</a>
+          </div>
+        </div>
+
+        <div class="quiz-content">
+
+          <div v-if="stage === 'quiz'" class="quiz-game">
+            <h1 class="quiz-heading" v-html="title"></h1>
+            <ul class="quiz-questions" v-if="stage === 'quiz'">
+              <li
+                class="quiz-question"
+                v-for="(answer, i) in questions[currentQuestion-1].answers"
+                :key="i"
+              >
+                <button
+                  class="quiz-question-button"
+                  :class="{'correct': usersAnswer === answer && answer === questions[currentQuestion-1].correct , 'wrong': usersAnswer === answer && usersAnswer !== questions[currentQuestion-1].correct}"
+                  @click="handleAnswer(answer)"
+                >{{moviesTitles[answer-1]}}</button>
+              </li>
+            </ul>
+          </div>
+
+        </div>
       </div>
     </transition>
     <div class="loader" v-else>
       <span></span>
+    </div>
+
+    <div class="footer">
+      <span>* az NDN Zrt. 2019. szeptember és 2020. szeptember közti adatai alapján</span>
     </div>
   </section>
 </template>
@@ -62,8 +92,6 @@ export default {
       loading: true,
       usersAnswer: null,
       moviesTitles: [
-        "Harry Potter and the Philosopher's Stone",
-        "Harry Potter and the Chamber of Secrets",
         "Harry Potter and the Prisoner of Azkaban",
         "Harry Potter and the Goblet of Fire",
         "Harry Potter and the Order of the Phoenix",
@@ -143,7 +171,7 @@ export default {
     },
     initWelcomeStage() {
       mutations.setStage("welcome");
-      mutations.setTitle("How Well Do You Know <br>the Harry Potter Movies?");
+      mutations.setTitle("Válaszoljon a Compact termékeinkkel kapcsolatos kérdéseinkre és nyerjen!");
       mutations.setImg(welcomeImg);
       mutations.setCurrentQuestion(0);
       mutations.resetAnswers();
