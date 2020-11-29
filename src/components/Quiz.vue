@@ -244,7 +244,7 @@ export default {
       const img = this.questions[i - 1].img;
       mutations.setImg(img);
       mutations.setCurrentQuestion(i);
-      this.anim.playSegments([i*10, i*20], true );
+      this.anim.playSegments([i*3, i*3 + 3], true );
     }
   },
   watch: {
