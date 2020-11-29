@@ -12,7 +12,6 @@
     <div class="quiz-anim">
       <lottie :options="defaultOptions" :height="400" :width="400" v-on:animCreated="handleAnimation"/>
     </div>
-
     <transition name="fade" mode="out-in" v-if="!loading">
       <div :key="currentQuestion" class="quiz-section">
 
@@ -31,6 +30,7 @@
             <!--
             <Picture class="quiz-img" :url="img"/>
             -->
+
             <h1 class="quiz-heading" v-html="resultsInfo.text"></h1>
             <p class="quiz-result" v-if="stage === 'results'" v-html="title"></p>
             <a
@@ -45,7 +45,8 @@
 
           <div v-if="stage === 'quiz'" class="quiz-game">
             <h1 class="quiz-heading" v-html="title"></h1>
-            <ul class="quiz-questions" v-if="stage === 'quiz'">
+
+            <ul class="quiz-questions">
               <li
                 class="quiz-question"
                 v-for="(answer, i) in questions[currentQuestion-1].answers"
@@ -94,6 +95,7 @@ export default {
     }
   },
   data() {
+    console.log(this.correctAnswers);
     return {
       loading: true,
       usersAnswer: null,
@@ -229,6 +231,8 @@ export default {
       this.usersAnswer = answer;
       mutations.addAnswer(answer);
       const nextQuestion = +this.currentQuestion + 1;
+      
+      console.log(this.correctAnswers);
 
       setTimeout(() => {
         if (nextQuestion <= this.questions.length) {
