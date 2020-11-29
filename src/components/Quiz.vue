@@ -32,7 +32,7 @@
             -->
 
             <h1 class="quiz-heading" v-html="resultsInfo.text"></h1>
-            <p class="quiz-result" v-if="stage === 'results'" v-html="title"></p>
+            <p class="quiz-result" v-html="title"></p>
             <a
               href="#restart-quiz"
               class="quiz-button"
@@ -95,7 +95,6 @@ export default {
     }
   },
   data() {
-    console.log(this.correctAnswers);
     return {
       loading: true,
       usersAnswer: null,
@@ -189,7 +188,7 @@ export default {
       } else if (localStorage.stage === "quiz") {
         this.initQuizStage(localStorage.currentQuestion || 1);
       } else {
-        this.initResultsStage();
+        this.initResultsStage(this.correctAnswers);
       }
     },
     initWelcomeStage() {
@@ -216,10 +215,11 @@ export default {
       this.loading = false;
     },
     initResultsStage() {
+      var correctAnswers = this.correctAnswers;
       mutations.setStage("results");
       mutations.setAnswers(localStorage.answers.split(","));
       mutations.setTitle(
-        `Your Score: ${this.correctAnswers} out of ${this.questions.length}`
+        `Your Score: ${correctAnswers} out of ${this.questions.length}`
       );
       mutations.setImg(this.resultsInfo.img);
       mutations.setCurrentQuestion(null);
@@ -231,8 +231,6 @@ export default {
       this.usersAnswer = answer;
       mutations.addAnswer(answer);
       const nextQuestion = +this.currentQuestion + 1;
-      
-      console.log(this.correctAnswers);
 
       setTimeout(() => {
         if (nextQuestion <= this.questions.length) {
