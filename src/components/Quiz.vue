@@ -44,6 +44,7 @@
         <div class="quiz-content">
 
           <div v-if="stage === 'quiz'" class="quiz-game">
+            <h2 v-html="question"></h2>
             <h1 class="quiz-heading" v-html="title"></h1>
 
             <ul class="quiz-questions">
@@ -56,7 +57,7 @@
                   class="quiz-question-button"
                   :class="{'correct': usersAnswer === answer && answer === questions[currentQuestion-1].correct , 'wrong': usersAnswer === answer && usersAnswer !== questions[currentQuestion-1].correct}"
                   @click="handleAnswer(answer)"
-                >{{moviesTitles[answer-1]}}</button>
+                >{{moviesTitles[answer-1]}} {{answer}} </button>
               </li>
             </ul>
           </div>
@@ -111,8 +112,9 @@ export default {
   },
   computed: {
     stage: () => store.stage,
-    title: () => store.title,
-    img: () => store.img,
+    title: () => store.question,
+    question: () => store.question,
+    note: () => store.note,
     questions: () => store.questions,
     currentQuestion: () => store.currentQuestion,
     answers: () => store.answers,

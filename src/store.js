@@ -4,6 +4,7 @@ export const store = Vue.observable({
   quizVersion: null,
   stage: null,
   title: null,
+  question: null,
   img: null,
   questions: [],
   currentQuestion: null,
@@ -19,6 +20,9 @@ export const mutations = {
   },
   setTitle(title) {
     store.title = title;
+  },
+  setQuestion(question) {
+    store.question = question;
   },
   setImg(img) {
     store.img = img;

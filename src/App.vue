@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <Quiz url="https://api.jsonbin.io/b/5cdd1762dbffad51f8aa85a5"/>
+    <Quiz url="https://api.jsonbin.io/b/5fc678aa045eb86f1f89b1b1"/>
   </div>
 </template>
 
