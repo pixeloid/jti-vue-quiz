@@ -42,13 +42,13 @@
             <Picture class="quiz-img" :url="img"/>
             -->
 
-            <h1 class="quiz-heading" v-html="resultsInfo.text"></h1>
-            <p class="quiz-result" v-html="title"></p>
+            <h1 class="quiz-heading">Gratulálunk, Ön nyert! Vegye át a sorsjegyeket a képviselőnktől!</h1>
+            <!--p class="quiz-result" v-html="title"></p-->
             <a
               href="#restart-quiz"
               class="quiz-button"
               @click.prevent="initWelcomeStage"
-            >Újra</a>
+            >Átveszem a sorsjegyeket</a>
           </div>
         </div>
 
@@ -234,7 +234,6 @@ export default {
       mutations.setTitle(
         `Your Score: ${correctAnswers} out of ${this.questions.length}`
       );
-      mutations.setImg(this.resultsInfo.img);
       mutations.setCurrentQuestion(null);
       this.loading = false;
     },
