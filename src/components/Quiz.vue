@@ -2,15 +2,15 @@
   <section class="quiz">
     <header class="app-header">
       <div class="counter-container">
-         <div class="quiz-counter" v-if="stage === 'quiz'">{{currentQuestion}} / {{questions.length}}</div>
-        <h2>A játék indítása</h2>
+         <div class="quiz-counter" >{{stage === 'results' ? 5 : currentQuestion||0}} / {{questions.length}}</div>
+        <h2 v-html="tagline"></h2>
       </div>
       <div class="brand">
         <img src=../assets/images/jti-logo.png alt="">
       </div>
     </header>
     <div class="quiz-anim">
-      <lottie :options="defaultOptions" :height="400" :width="400" v-on:animCreated="handleAnimation"/>
+      <lottie class="lottie" :options="defaultOptions"  v-on:animCreated="handleAnimation"/>
     </div>
     <transition name="fade" mode="out-in" v-if="!loading">
       <div :key="currentQuestion" class="quiz-section">
@@ -20,9 +20,20 @@
           <a
             href="#start-quiz"
             class="quiz-button"
-            @click.prevent="initQuizStage"
+            @click.prevent="initLegalStage"
             v-if="stage === 'welcome'"
           >Indítás</a>
+        </div>
+
+        <div v-if="stage === 'legal'" class="quiz-home">
+          <h1 class="quiz-heading quiz-heading--legal">
+            A jelen kereskedelmi tájékoztató kizárólag a dohánytermék forgalmazóinak szóló szakmai  célú reklám. <b>Ezért kérjük, ne tegye a fogyasztók számára elérhetővé!</b>
+          </h1>
+          <a
+            href="#start-quiz"
+            class="quiz-button"
+            @click.prevent="initQuizStage"
+          >Megértettem</a>
         </div>
 
         <div v-if="stage === 'results'">
@@ -44,8 +55,7 @@
         <div class="quiz-content">
 
           <div v-if="stage === 'quiz'" class="quiz-game">
-            <h2 v-html="question"></h2>
-            <h1 class="quiz-heading" v-html="title"></h1>
+            <h1 class="quiz-heading" v-html="questions[currentQuestion-1].question"></h1>
 
             <ul class="quiz-questions">
               <li
@@ -55,9 +65,9 @@
               >
                 <button
                   class="quiz-question-button"
-                  :class="{'correct': usersAnswer === answer && answer === questions[currentQuestion-1].correct , 'wrong': usersAnswer === answer && usersAnswer !== questions[currentQuestion-1].correct}"
-                  @click="handleAnswer(answer)"
-                >{{moviesTitles[answer-1]}} {{answer}} </button>
+                  :class="{'correct': usersAnswer === i && i === questions[currentQuestion-1].correct , 'wrong': usersAnswer === i && usersAnswer !== questions[currentQuestion-1].correct}"
+                  @click="handleAnswer(i)"
+                > {{answer}} </button>
               </li>
             </ul>
           </div>
@@ -70,7 +80,7 @@
     </div>
 
     <div class="footer">
-      <span>* az NDN Zrt. 2019. szeptember és 2020. szeptember közti adatai alapján</span>
+      <span></span>
     </div>
   </section>
 </template>
@@ -79,7 +89,7 @@
 import { store, mutations, actions } from "../store";
 import { version as appVersion } from "../../package.json";
 import Lottie from './lottie.vue';
-import * as animationData from '../assets/lottie/sample.json';
+import * as animationData from '../assets/lottie/JTI_All_v01.json';
 
 const welcomeImg =
   "https://media0.giphy.com/media/Bh3YfliwBZNwk/giphy.gif?cid=3640f6095c852266776c6f746fb2fc67";
@@ -100,21 +110,13 @@ export default {
       loading: true,
       usersAnswer: null,
       defaultOptions: {animationData: animationData.default},
-      moviesTitles: [
-        "Harry Potter and the Prisoner of Azkaban",
-        "Harry Potter and the Goblet of Fire",
-        "Harry Potter and the Order of the Phoenix",
-        "Harry Potter and the Half-Blood Prince",
-        "Harry Potter and the Deathly Hallows – Part 1",
-        "Harry Potter and the Deathly Hallows – Part 2"
-      ]
     };
   },
   computed: {
     stage: () => store.stage,
-    title: () => store.question,
+    title: () => store.title,
+    tagline: () => store.tagline,
     question: () => store.question,
-    note: () => store.note,
     questions: () => store.questions,
     currentQuestion: () => store.currentQuestion,
     answers: () => store.answers,
@@ -195,6 +197,7 @@ export default {
     },
     initWelcomeStage() {
       mutations.setStage("welcome");
+      mutations.setTagline("A játék indítása");
       mutations.setTitle("Válaszoljon a Compact termékeinkkel kapcsolatos kérdéseinkre és nyerjen!");
       mutations.setImg(welcomeImg);
       mutations.setCurrentQuestion(0);
@@ -207,25 +210,32 @@ export default {
     },
     initQuizStage(currentQuestion) {
       mutations.setStage("quiz");
-      mutations.setTitle("Ez a kérdés?");
+      mutations.setTagline("Válaszoljon a kérdésekre");
+      this.anim.goToAndStop(0);
       mutations.setAnswers(
         localStorage.answers ? localStorage.answers.split(",") : []
       );
 
       this.goToQuestion(+currentQuestion || 1);
-
+      this.loading = false;
+    },
+    initLegalStage() {
+      mutations.setStage("legal");
       this.loading = false;
     },
     initResultsStage() {
       var correctAnswers = this.correctAnswers;
+
+      this.anim.playSegments([0,1],true)
+
       mutations.setStage("results");
+      mutations.setTagline("Vége a játéknak");
       mutations.setAnswers(localStorage.answers.split(","));
       mutations.setTitle(
         `Your Score: ${correctAnswers} out of ${this.questions.length}`
       );
       mutations.setImg(this.resultsInfo.img);
       mutations.setCurrentQuestion(null);
-
       this.loading = false;
     },
     handleAnswer(answer) {
@@ -233,7 +243,6 @@ export default {
       this.usersAnswer = answer;
       mutations.addAnswer(answer);
       const nextQuestion = +this.currentQuestion + 1;
-
       setTimeout(() => {
         if (nextQuestion <= this.questions.length) {
           this.goToQuestion(nextQuestion);
@@ -245,10 +254,13 @@ export default {
     goToQuestion(i) {
       this.usersAnswer = null;
 
-      const img = this.questions[i - 1].img;
-      mutations.setImg(img);
+
       mutations.setCurrentQuestion(i);
-      this.anim.playSegments([i*10, i*20], true );
+      const frame = this.questions[i-1].frame;
+
+      setTimeout(() => {
+        this.anim.playSegments([frame[0], frame[1]], true );
+      }, 0)
     }
   },
   watch: {

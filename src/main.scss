@@ -46,20 +46,35 @@ body {
   height: 100%;
   background: $white;
   color: $blue;
-  padding: 0 $space7;
 }
 
 .app {
-  min-height: 100%;
   font-family: "Winston", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: left;
 }
 
-.app-header {
+.quiz {
+  height: 56.25vw;
+  position: relative;
+}
+.quiz-anim {
   width: 100%;
-  padding: 0;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  .lottie {
+    width: 100%;
+  }
+}
+
+.app-header {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: 0 3rem;
   font-size: 1em;
   display: flex;
   justify-content: space-between;
@@ -100,14 +115,22 @@ body {
 }
 
 h1.quiz-heading {
-  font-size: 4em;
+  font-size: 3em;
   line-height: 1;
+  &--legal {
+    font-size: 2.5em;
+    font-weight: 300;
+    b {
+      display: block;
+    }
+  }
 }
 
 .quiz-section {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
+  flex-direction: column;
   position: absolute;
   height: 100%;
   top: 0;
@@ -117,17 +140,20 @@ h1.quiz-heading {
   .quiz-content {
     display: flex;
     width: 50%;
+    align-self: flex-end;
   }
 
   .quiz-home {
-    padding: 0 8em;
+    padding-left: 4em;
+    max-width: 800px;
+    margin-right: auto;
   }
 
 }
 
 .quiz-button {
   display: block;
-  border: 2px solid $primaryBlue;
+  border: 1px solid $primaryBlue;
   color: $primaryBlue;
   font-size: $large;
   padding: $space + 4;
@@ -136,21 +162,30 @@ h1.quiz-heading {
   text-transform: uppercase;
   text-decoration: none;
   box-shadow: 0 $size $space 0 rgba(0, 66, 131, .14);
+
+  .quiz-home &{
+    width: auto;
+    display: inline-block;
+    padding: 0.4em 3em;
+    font-size: 24px;
+  }
 }
 
 .quiz-game {
   width: 100%;
   h1.quiz-heading {
-    font-size: $large + $space;
+    font-size: 28px;
+    font-weight: 400;
+
   }
   .quiz-questions {
     padding: 0;
 
     .quiz-question-button {
       display: block;
-      border: 2px solid $primaryBlue;
+      border: 1px solid $primaryBlue;
       color: $primaryBlue;
-      font-size: $medium;
+      font-size: 18px;
       padding: $space;
       text-align: center;
       width: 80%;
@@ -159,6 +194,7 @@ h1.quiz-heading {
       margin-bottom: $size;
       background-color: $white;
       cursor: pointer;
+      text-transform: uppercase;
     
       &:hover {
         //background-color: AliceBlue;
@@ -226,6 +262,7 @@ h1.quiz-heading {
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s, transform 0.5s;
+  transition-delay: .8s;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
