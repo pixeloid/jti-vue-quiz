@@ -205,6 +205,7 @@ export default {
 
       localStorage.appVersion = appVersion;
       localStorage.quizVersion = store.quizVersion;
+      this.anim.playSegments([0,1],true)
 
       this.loading = false;
     },
@@ -226,7 +227,6 @@ export default {
     initResultsStage() {
       var correctAnswers = this.correctAnswers;
 
-      this.anim.playSegments([0,1],true)
 
       mutations.setStage("results");
       mutations.setTagline("Vége a játéknak");
@@ -236,6 +236,10 @@ export default {
       );
       mutations.setCurrentQuestion(null);
       this.loading = false;
+      setTimeout( () => {
+        this.anim.playSegments([493, 528], true );
+      }, 700)
+
     },
     handleAnswer(answer) {
       if (this.usersAnswer !== null) return;
