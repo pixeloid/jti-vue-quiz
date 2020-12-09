@@ -42,13 +42,13 @@
             <Picture class="quiz-img" :url="img"/>
             -->
 
-            <h1 class="quiz-heading">Gratulálunk, Ön nyert! Vegye át a sorsjegyeket a képviselőnktől!</h1>
+            <h1 class="quiz-heading">{{ resultsInfo.text }}</h1>
             <!--p class="quiz-result" v-html="title"></p-->
             <a
               href="#restart-quiz"
               class="quiz-button"
               @click.prevent="initWelcomeStage"
-            >Átveszem a sorsjegyeket</a>
+            >Újrakezdem</a>
           </div>
         </div>
 
@@ -128,34 +128,22 @@ export default {
       return count;
     },
     resultsInfo() {
+      if (this.correctAnswers < 2) {
+        return {
+          text:
+            "Majdnem jó, de a képviselőtől még megtudhat érdekes részleteket!",
+        };
+      }
+      if (this.correctAnswers < 4) {
+        return {
+          text:
+            "Jól ismeri a JTI Compact termékeket, kis csiszolásra van csupán szükség a master fokozathoz!",
+        };
+      }
       if (this.correctAnswers < 10) {
         return {
           text:
-            "Practice, practice, practice! <br>You'll be a clever as Dumbledore in no time!",
-          img:
-            "https://media0.giphy.com/media/720g7C1jz13wI/giphy.gif?cid=3640f6095c869951776a4a7a5110b5dc"
-        };
-      }
-      if (this.correctAnswers < 15) {
-        return {
-          text:
-            "Not too shabby! <br>Have a Harry Potter movie marathon and then try again!",
-          img:
-            "https://media2.giphy.com/media/UeeJAeey9GJjO/giphy.gif?cid=3640f6095c869e703631634241b759c1"
-        };
-      }
-      if (this.correctAnswers < 20) {
-        return {
-          text:
-            "Very good! <br>Have another go and you'll be getting full marks!",
-          img: "https://media.giphy.com/media/TGLLaCKWwxUVq/giphy.gif"
-        };
-      }
-      if (this.correctAnswers === 20) {
-        return {
-          text:
-            "TOP MARKS! Nice work! <br>You have some serious wizard wisdom!",
-          img: "https://media.giphy.com/media/9H279yb0blggo/giphy.gif"
+            "Igazi profi, gratulálunk!",
         };
       }
 
