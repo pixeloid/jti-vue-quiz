@@ -43,7 +43,7 @@
             -->
 
             <h1 class="quiz-heading">{{ resultsInfo.text }}</h1>
-            <!--p class="quiz-result" v-html="title"></p-->
+            <p class="quiz-result" v-html="title"></p>
             <a
               href="#restart-quiz"
               class="quiz-button"
@@ -123,7 +123,7 @@ export default {
     correctAnswers() {
       let count = 0;
       this.questions.forEach((q, i) => {
-        if (q.correct === this.answers[i]) count++;
+        if (q.correct === parseInt(this.answers[i])) count++;
       });
       return count;
     },
@@ -215,12 +215,11 @@ export default {
     initResultsStage() {
       var correctAnswers = this.correctAnswers;
 
-
       mutations.setStage("results");
       mutations.setTagline("Vége a játéknak");
       mutations.setAnswers(localStorage.answers.split(","));
       mutations.setTitle(
-        `Your Score: ${correctAnswers} out of ${this.questions.length}`
+        `Eredmény: ${correctAnswers} / ${this.questions.length}`
       );
       mutations.setCurrentQuestion(null);
       this.loading = false;
