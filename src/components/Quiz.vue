@@ -48,7 +48,7 @@
               href="#restart-quiz"
               class="quiz-button"
               @click.prevent="initWelcomeStage"
-            >Újrakezdem</a>
+            >{{ resultsInfo.button }}</a>
           </div>
         </div>
 
@@ -131,19 +131,24 @@ export default {
       if (this.correctAnswers < 2) {
         return {
           text:
-            "Majdnem jó, de a képviselőtől még megtudhat érdekes részleteket!",
+            "Majdnem jó, de a képviselőnktől még megtudhat további érdekes részleteket. Próbálja újra!",
+          button:
+          "Játék indítása"
         };
       }
       if (this.correctAnswers < 4) {
         return {
           text:
-            "Jól ismeri a JTI Compact termékeket, kis csiszolásra van csupán szükség a master fokozathoz!",
+            "Ön jól ismeri a JTI Compact termékeket, kis csiszolásra van csupán szükség a mesterfokozathoz. Próbálja meg újra!",
+          button:
+              "Játék indítása"
         };
       }
       if (this.correctAnswers < 10) {
         return {
           text:
-            "Igazi profi, gratulálunk!",
+            "Ön igazi profi, gratulálunk! Vegye át a sorsjegyeket a képviselőnktől!",
+          button: "Átveszem a sorsjegyeket"
         };
       }
 
